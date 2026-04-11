@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="description" content="Temporary Famio wordmark exploration — not for indexing." />
+    <title>Famio logo lab · 100 ideas (temp)</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&family=Comfortaa:wght@400;500;600;700&family=Courgette&family=Damion&family=Fredoka:wght@400;500;600;700&family=Grand+Hotel&family=Kalam:wght@300;400;700&family=Kaushan+Script&family=M+PLUS+Rounded+1c:wght@400;500;700;800&family=Nunito:wght@400;500;600;700;800&family=Nunito+Sans:wght@400;500;600;700;800&family=Pacifico&family=Poppins:wght@400;500;600;700;800&family=Quicksand:wght@400;500;600;700&family=Rubik:wght@400;500;600;700&family=Sacramento&family=Satisfy&family=Sofia+Sans:wght@400;500;600;700&family=Varela+Round&family=Yellowtail&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        /* Match famio_web / index.css brand */
+        --mint: #50d291;
+        --sky: #4182f1;
+        --accent: #c012b1;
+        --ink: #141820;
+        --muted: #5c6573;
+        --line: #d8dde6;
+        --paper: #f7f8fb;
+        --card: #ffffff;
+        --radius: 14px;
+        --font-ui: system-ui, -apple-system, 'Segoe UI', sans-serif;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --ink: #f0f2f7;
+          --muted: #a8b0bd;
+          --line: #343b48;
+          --paper: #0e1117;
+          --card: #161b24;
+        }
+      }
+
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        html {
+          scroll-behavior: auto;
+        }
+      }
+
+      body {
+        margin: 0;
+        font-family: var(--font-ui);
+        font-size: 15px;
+        line-height: 1.5;
+        color: var(--muted);
+        background: var(--paper);
+      }
+
+      a {
+        color: var(--sky);
+      }
+
+      a:focus-visible {
+        outline: 2px solid var(--sky);
+        outline-offset: 3px;
+      }
+
+      .skip {
+        position: absolute;
+        left: -9999px;
+        top: 0;
+        padding: 0.5rem 1rem;
+        background: var(--ink);
+        color: var(--paper);
+        z-index: 999;
+      }
+
+      .skip:focus {
+        left: 1rem;
+        top: 1rem;
+      }
+
+      .wrap {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 1.5rem 1.25rem 3rem;
+      }
+
+      .page-head {
+        margin-bottom: 1.75rem;
+        padding-bottom: 1.25rem;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .page-head h1 {
+        margin: 0 0 0.35rem;
+        font-size: clamp(1.35rem, 3vw, 1.75rem);
+        font-weight: 700;
+        letter-spacing: -0.02em;
+        color: var(--ink);
+      }
+
+      .page-head p {
+        margin: 0;
+        max-width: 62ch;
+        font-size: 0.92rem;
+      }
+
+      .badge {
+        display: inline-block;
+        margin-bottom: 0.65rem;
+        padding: 0.2rem 0.55rem;
+        font-size: 0.68rem;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        border-radius: 6px;
+        background: color-mix(in srgb, var(--accent) 18%, transparent);
+        color: var(--ink);
+      }
+
+      .logo-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+        gap: 1rem;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+
+      .logo-cell {
+        margin: 0;
+        padding: 1rem 1rem 0.85rem;
+        border-radius: var(--radius);
+        background: var(--card);
+        border: 1px solid var(--line);
+        display: flex;
+        flex-direction: column;
+        gap: 0.65rem;
+        min-height: 132px;
+        transition:
+          border-color 0.2s ease,
+          box-shadow 0.2s ease;
+      }
+
+      .logo-cell:hover {
+        border-color: color-mix(in srgb, var(--sky) 35%, var(--line));
+        box-shadow: 0 8px 28px rgba(0, 0, 0, 0.06);
+      }
+
+      @media (prefers-color-scheme: dark) {
+        .logo-cell:hover {
+          box-shadow: 0 8px 28px rgba(0, 0, 0, 0.35);
+        }
+      }
+
+      .logo-cell__meta {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 0.5rem;
+        font-size: 0.72rem;
+        font-weight: 600;
+        color: var(--muted);
+        letter-spacing: 0.02em;
+      }
+
+      .logo-cell__n {
+        font-variant-numeric: tabular-nums;
+        opacity: 0.85;
+      }
+
+      .logo-cell__treatment {
+        font-weight: 500;
+        text-align: right;
+        max-width: 58%;
+        line-height: 1.25;
+      }
+
+      .logo-mark {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 3.25rem;
+        padding: 0.35rem 0.25rem;
+        border-radius: 10px;
+        background: color-mix(in srgb, var(--paper) 88%, transparent);
+      }
+
+      @media (prefers-color-scheme: dark) {
+        .logo-mark {
+          background: color-mix(in srgb, var(--card) 70%, var(--ink));
+        }
+      }
+
+      /* Variant: tight bold wordmark */
+      .t--tight .logo-word {
+        font-weight: 800;
+        letter-spacing: -0.045em;
+        font-size: 1.65rem;
+        line-height: 1;
+        color: var(--ink);
+      }
+
+      /* Variant: open / airy */
+      .t--open .logo-word {
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        font-size: 1.45rem;
+        line-height: 1;
+        color: var(--ink);
+      }
+
+      /* Variant: wide caps */
+      .t--caps .logo-word {
+        font-weight: 700;
+        letter-spacing: 0.22em;
+        font-size: 0.95rem;
+        line-height: 1;
+        text-transform: uppercase;
+        color: var(--ink);
+      }
+
+      /* Variant: gradient (brand) */
+      .t--grad .logo-word {
+        font-weight: 800;
+        letter-spacing: -0.04em;
+        font-size: 1.6rem;
+        line-height: 1;
+        background: linear-gradient(115deg, var(--mint) 0%, var(--sky) 48%, var(--accent) 100%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+      }
+
+      @supports not (background-clip: text) {
+        .t--grad .logo-word {
+          color: var(--sky);
+        }
+      }
+
+      /* Variant: word + tricolor dots */
+      .t--dots .logo-row {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.35rem;
+      }
+
+      .t--dots .logo-word {
+        font-weight: 700;
+        letter-spacing: -0.035em;
+        font-size: 1.55rem;
+        line-height: 1;
+        color: var(--ink);
+      }
+
+      .t--dots .logo-dots {
+        display: inline-flex;
+        gap: 0.2rem;
+        align-items: center;
+      }
+
+      .t--dots .logo-dots span {
+        width: 0.38rem;
+        height: 0.38rem;
+        border-radius: 50%;
+        flex-shrink: 0;
+      }
+
+      .t--dots .logo-dots span:nth-child(1) {
+        background: var(--mint);
+      }
+
+      .t--dots .logo-dots span:nth-child(2) {
+        background: var(--sky);
+      }
+
+      .t--dots .logo-dots span:nth-child(3) {
+        background: var(--accent);
+      }
+
+      .logo-foot {
+        margin: 0;
+        font-size: 0.7rem;
+        line-height: 1.35;
+        color: var(--muted);
+        opacity: 0.92;
+      }
+
+      /* Casual script logos (Pacifico-like): slightly larger, gentler “wide caps” */
+      .logo-cell--script .logo-mark {
+        min-height: 3.5rem;
+      }
+
+      .logo-cell--script .t--tight .logo-word,
+      .logo-cell--script .t--open .logo-word,
+      .logo-cell--script .t--grad .logo-word {
+        font-size: clamp(1.75rem, 4.5vw, 2.05rem);
+      }
+
+      .logo-cell--script .t--dots .logo-word {
+        font-size: clamp(1.65rem, 4vw, 1.95rem);
+      }
+
+      .logo-cell--script .t--caps .logo-word {
+        letter-spacing: 0.1em;
+        font-size: clamp(0.82rem, 2.2vw, 0.95rem);
+      }
+    </style>
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to grid</a>
+    <div class="wrap">
+      <header class="page-head">
+        <span class="badge">Temp · not indexed</span>
+        <h1>Famio logo lab — 100 type directions</h1>
+        <p>
+          Half the grid is <strong style="color: var(--ink)">rounded sans</strong> wordmarks (like your
+          <strong style="color: var(--ink)">Fredoka</strong> headlines and <strong style="color: var(--ink)">Nunito</strong> body). The other
+          half is <strong style="color: var(--ink)">casual script &amp; brush</strong> faces in the same neighborhood as your current logo font,
+          <strong style="color: var(--ink)">Pacifico</strong>—bouncy, friendly, single-line “Famio” energy. Same five treatments (tight bold,
+          open, wide caps, brand gradient, wordmark + dots). Delete this file when you no longer need it.
+        </p>
+        <p style="margin-top: 0.65rem">
+          <strong style="color: var(--ink)">Open in dev:</strong>
+          <code style="font-size: 0.85em">/famio-logo-lab.html</code>
+        </p>
+      </header>
+
+      <main id="main">
+        <ul class="logo-grid" id="logo-grid" aria-label="One hundred Famio logo ideas"></ul>
+      </main>
+    </div>
+
+    <script>
+      ;(function () {
+        'use strict'
+
+        /* 20 × 5 = 100: 10 rounded sans + 10 Pacifico-like scripts */
+        var FONTS = [
+          { name: 'Fredoka (site display)', stack: "'Fredoka', system-ui, sans-serif", script: false },
+          { name: 'Nunito (site body)', stack: "'Nunito', system-ui, sans-serif", script: false },
+          { name: 'Quicksand', stack: "'Quicksand', system-ui, sans-serif", script: false },
+          { name: 'Varela Round', stack: "'Varela Round', system-ui, sans-serif", script: false },
+          { name: 'Comfortaa', stack: "'Comfortaa', system-ui, sans-serif", script: false },
+          { name: 'M PLUS Rounded 1c', stack: "'M PLUS Rounded 1c', system-ui, sans-serif", script: false },
+          { name: 'Poppins', stack: "'Poppins', system-ui, sans-serif", script: false },
+          { name: 'Nunito Sans', stack: "'Nunito Sans', system-ui, sans-serif", script: false },
+          { name: 'Rubik', stack: "'Rubik', system-ui, sans-serif", script: false },
+          { name: 'Sofia Sans', stack: "'Sofia Sans', system-ui, sans-serif", script: false },
+          { name: 'Pacifico (current logo)', stack: "'Pacifico', cursive", script: true },
+          { name: 'Satisfy', stack: "'Satisfy', cursive", script: true },
+          { name: 'Caveat', stack: "'Caveat', cursive", script: true },
+          { name: 'Damion', stack: "'Damion', cursive", script: true },
+          { name: 'Kalam', stack: "'Kalam', cursive", script: true },
+          { name: 'Grand Hotel', stack: "'Grand Hotel', cursive", script: true },
+          { name: 'Sacramento', stack: "'Sacramento', cursive", script: true },
+          { name: 'Kaushan Script', stack: "'Kaushan Script', cursive", script: true },
+          { name: 'Courgette', stack: "'Courgette', cursive", script: true },
+          { name: 'Yellowtail', stack: "'Yellowtail', cursive", script: true },
+        ]
+
+        var VARIANTS = [
+          { cls: 't--tight', label: 'Bold · tight' },
+          { cls: 't--open', label: 'Medium · open' },
+          { cls: 't--caps', label: 'Wide · caps' },
+          { cls: 't--grad', label: 'Brand gradient' },
+          { cls: 't--dots', label: 'Word + 3 dots' },
+        ]
+
+        var grid = document.getElementById('logo-grid')
+        if (!grid || FONTS.length * VARIANTS.length !== 100) {
+          console.error('Famio logo lab: expected 100 combinations.')
+          return
+        }
+
+        var n = 0
+        for (var i = 0; i < FONTS.length; i++) {
+          for (var j = 0; j < VARIANTS.length; j++) {
+            n++
+            var font = FONTS[i]
+            var v = VARIANTS[j]
+
+            var li = document.createElement('li')
+            li.className = 'logo-cell ' + v.cls
+            if (font.script) {
+              li.classList.add('logo-cell--script')
+            }
+
+            var meta = document.createElement('div')
+            meta.className = 'logo-cell__meta'
+            var num = document.createElement('span')
+            num.className = 'logo-cell__n'
+            num.textContent = String(n).padStart(2, '0')
+            var treat = document.createElement('span')
+            treat.className = 'logo-cell__treatment'
+            treat.textContent = v.label
+            meta.appendChild(num)
+            meta.appendChild(treat)
+
+            var mark = document.createElement('div')
+            mark.className = 'logo-mark'
+
+            if (v.cls === 't--dots') {
+              var row = document.createElement('span')
+              row.className = 'logo-row'
+              var word = document.createElement('span')
+              word.className = 'logo-word'
+              word.textContent = 'Famio'
+              word.style.fontFamily = font.stack
+              var dots = document.createElement('span')
+              dots.className = 'logo-dots'
+              dots.appendChild(document.createElement('span'))
+              dots.appendChild(document.createElement('span'))
+              dots.appendChild(document.createElement('span'))
+              row.appendChild(word)
+              row.appendChild(dots)
+              mark.appendChild(row)
+            } else {
+              var w = document.createElement('span')
+              w.className = 'logo-word'
+              w.textContent = 'Famio'
+              w.style.fontFamily = font.stack
+              mark.appendChild(w)
+            }
+
+            var foot = document.createElement('p')
+            foot.className = 'logo-foot'
+            foot.textContent = font.name
+
+            li.appendChild(meta)
+            li.appendChild(mark)
+            li.appendChild(foot)
+            grid.appendChild(li)
+          }
+        }
+      })()
+    </script>
+  </body>
+</html>

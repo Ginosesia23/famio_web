@@ -1,0 +1,1159 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="description" content="Famio hero graphic options (temp)." />
+    <title>Famio hero lab · 20 distinct directions (temp)</title>
+    <style>
+      :root {
+        --mint: #50d291;
+        --sky: #4182f1;
+        --accent: #c012b1;
+        --mint-soft: rgba(80, 210, 145, 0.38);
+        --sky-soft: rgba(65, 130, 241, 0.32);
+        --accent-soft: rgba(192, 18, 177, 0.22);
+        --ink: #141820;
+        --muted: #5c6573;
+        --line: #d8dde6;
+        --paper: #f7f8fb;
+        --card: #ffffff;
+        --phone-chrome: #1e1e24;
+        --screen-bg: #f2faf7;
+      }
+
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+        font-size: 15px;
+        line-height: 1.45;
+        color: var(--muted);
+        background: var(--paper);
+      }
+
+      .skip {
+        position: absolute;
+        left: -9999px;
+        top: 0;
+        padding: 0.5rem 1rem;
+        background: var(--ink);
+        color: #fff;
+        z-index: 999;
+      }
+
+      .skip:focus {
+        left: 1rem;
+        top: 1rem;
+      }
+
+      .wrap {
+        max-width: 1680px;
+        margin: 0 auto;
+        padding: 1.5rem 1.25rem 3rem;
+      }
+
+      .page-head {
+        margin-bottom: 1.5rem;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .page-head h1 {
+        margin: 0 0 0.4rem;
+        font-size: clamp(1.2rem, 2.4vw, 1.6rem);
+        font-weight: 700;
+        letter-spacing: -0.02em;
+        color: var(--ink);
+      }
+
+      .page-head p {
+        margin: 0;
+        max-width: 75ch;
+        font-size: 0.9rem;
+      }
+
+      .badge {
+        display: inline-block;
+        margin-bottom: 0.5rem;
+        padding: 0.2rem 0.55rem;
+        font-size: 0.65rem;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        border-radius: 6px;
+        background: color-mix(in srgb, var(--sky) 16%, transparent);
+        color: var(--ink);
+      }
+
+      .hero-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 1.15rem;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+
+      @media (max-width: 1100px) {
+        .hero-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+      }
+
+      @media (max-width: 640px) {
+        .hero-grid {
+          grid-template-columns: minmax(0, 1fr);
+        }
+      }
+
+      .hero-lab-cell {
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 0.45rem;
+      }
+
+      .hero-lab-meta {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 0.5rem;
+        font-size: 0.72rem;
+        font-weight: 600;
+        color: var(--muted);
+        line-height: 1.35;
+      }
+
+      .hero-lab-meta span:first-child {
+        flex-shrink: 0;
+        font-variant-numeric: tabular-nums;
+      }
+
+      .hero-lab-meta span:last-child {
+        text-align: right;
+        color: color-mix(in srgb, var(--ink) 35%, var(--muted));
+      }
+
+      /* Canvas */
+      .hero-gfx {
+        position: relative;
+        width: 100%;
+        aspect-ratio: 16 / 11;
+        border-radius: 14px;
+        overflow: hidden;
+        border: 1px solid color-mix(in srgb, var(--line) 82%, transparent);
+        background: var(--card);
+      }
+
+      .hero-gfx::before,
+      .hero-gfx::after {
+        content: none;
+        position: absolute;
+        pointer-events: none;
+        border-radius: 50%;
+      }
+
+      /* Extra layers (per-option) */
+      .hero-gfx__rect,
+      .hero-gfx__band,
+      .hero-gfx__shard {
+        display: none;
+        position: absolute;
+        pointer-events: none;
+      }
+
+      .hero-gfx__ring {
+        display: none;
+        position: absolute;
+        z-index: 1;
+        width: 58%;
+        height: 86%;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        border-radius: 50%;
+        box-sizing: border-box;
+      }
+
+      .hero-gfx__ring::before,
+      .hero-gfx__ring::after {
+        content: none;
+        position: absolute;
+        inset: 0;
+        border-radius: 50%;
+        box-sizing: border-box;
+        pointer-events: none;
+      }
+
+      .hero-gfx__stage {
+        position: absolute;
+        z-index: 3;
+        left: 4%;
+        right: 4%;
+        top: 5%;
+        bottom: 5%;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        gap: 1.75%;
+        pointer-events: none;
+      }
+
+      .hero-gfx__events {
+        flex: 1 1 38%;
+        min-width: 0;
+        max-width: 46%;
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+      }
+
+      .hero-gfx__ev {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 6px;
+        padding: 5px 8px 5px 5px;
+        border-radius: 8px;
+        background: var(--card);
+        border: 1px solid color-mix(in srgb, var(--line) 78%, transparent);
+        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+        font-size: 11px;
+        line-height: 1.2;
+      }
+
+      .hero-gfx__ev-icon {
+        flex-shrink: 0;
+        width: 26px;
+        height: 26px;
+        border-radius: 5px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 14px;
+        line-height: 1;
+      }
+
+      .hero-gfx__ev--flight .hero-gfx__ev-icon {
+        background: color-mix(in srgb, var(--sky-soft) 70%, var(--card));
+      }
+
+      .hero-gfx__ev--party .hero-gfx__ev-icon {
+        background: color-mix(in srgb, var(--accent-soft) 80%, var(--card));
+      }
+
+      .hero-gfx__ev--cal .hero-gfx__ev-icon {
+        background: color-mix(in srgb, var(--mint-soft) 70%, var(--card));
+      }
+
+      .hero-gfx__ev-title {
+        font-weight: 800;
+        color: var(--ink);
+        letter-spacing: -0.02em;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .hero-gfx__ev-meta {
+        font-weight: 700;
+        color: var(--muted);
+        font-size: 9px;
+        margin-top: 1px;
+      }
+
+      .hero-gfx__phone {
+        position: relative;
+        flex: 0 0 54%;
+        width: 54%;
+        max-width: 240px;
+        aspect-ratio: 9 / 19.5;
+        border-radius: 16px;
+        padding: 3px;
+        background: linear-gradient(160deg, #3a3a44, var(--phone-chrome));
+        box-shadow: 0 12px 36px rgba(0, 0, 0, 0.16);
+      }
+
+      .hero-gfx__screen {
+        height: 100%;
+        border-radius: 13px;
+        background: var(--screen-bg);
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .hero-gfx__screen-inner {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        min-height: 0;
+        font-size: 12px;
+      }
+
+      .hero-gfx__scr-notch {
+        height: 8px;
+        width: 32%;
+        margin: 3px auto 0;
+        border-radius: 0 0 4px 4px;
+        background: #121218;
+        flex-shrink: 0;
+      }
+
+      .hero-gfx__scr-head {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        gap: 4px;
+        padding: 8px 9px 5px;
+        background: color-mix(in srgb, var(--card) 92%, var(--screen-bg));
+        border-bottom: 1px solid color-mix(in srgb, var(--line) 65%, transparent);
+        flex-shrink: 0;
+      }
+
+      .hero-gfx__scr-title {
+        font-weight: 800;
+        color: var(--ink);
+        letter-spacing: -0.03em;
+        line-height: 1.1;
+      }
+
+      .hero-gfx__scr-sub {
+        font-weight: 700;
+        color: var(--muted);
+        font-size: 9px;
+        margin-top: 1px;
+      }
+
+      .hero-gfx__scr-avs {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+      }
+
+      .hero-gfx__scr-avs span {
+        width: 14px;
+        height: 14px;
+        border-radius: 50%;
+        border: 1px solid var(--card);
+        margin-left: -3px;
+        box-shadow: 0 0 0 0.5px rgba(0, 0, 0, 0.06);
+      }
+
+      .hero-gfx__scr-avs span:first-child {
+        margin-left: 0;
+      }
+
+      .hero-gfx__scr-avs span:nth-child(1) {
+        background: linear-gradient(135deg, var(--accent-soft), var(--accent));
+      }
+
+      .hero-gfx__scr-avs span:nth-child(2) {
+        background: linear-gradient(135deg, var(--sky-soft), var(--sky));
+      }
+
+      .hero-gfx__scr-avs span:nth-child(3) {
+        background: linear-gradient(135deg, var(--mint-soft), var(--mint));
+      }
+
+      .hero-gfx__scr-feed {
+        flex: 1;
+        min-height: 0;
+        overflow: hidden;
+        padding: 7px 7px 9px;
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        background: linear-gradient(
+          180deg,
+          color-mix(in srgb, var(--sky-soft) 35%, var(--screen-bg)),
+          var(--screen-bg)
+        );
+      }
+
+      .hero-gfx__msg {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1px;
+        max-width: 100%;
+      }
+
+      .hero-gfx__msg--you {
+        align-items: flex-end;
+      }
+
+      .hero-gfx__msg-lab {
+        font-weight: 800;
+        font-size: 7px;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: var(--muted);
+        padding-left: 1px;
+      }
+
+      .hero-gfx__msg--you .hero-gfx__msg-lab {
+        padding-left: 0;
+        padding-right: 1px;
+      }
+
+      .hero-gfx__msg-bub {
+        font-weight: 700;
+        line-height: 1.3;
+        padding: 4px 7px;
+        border-radius: 6px 6px 6px 3px;
+        background: color-mix(in srgb, var(--sky-soft) 85%, #fff);
+        color: var(--ink);
+        border: 1px solid color-mix(in srgb, var(--sky) 22%, var(--line));
+        max-width: 96%;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+      }
+
+      .hero-gfx__msg-bub--you {
+        border-radius: 6px 6px 3px 6px;
+        background: linear-gradient(
+          135deg,
+          color-mix(in srgb, var(--mint-soft) 75%, #fff),
+          color-mix(in srgb, var(--sky-soft) 55%, #fff)
+        );
+        border-color: color-mix(in srgb, var(--mint) 28%, var(--line));
+      }
+
+      .hero-gfx__flight {
+        padding: 4px 7px 5px;
+        border-radius: 6px;
+        background: var(--card);
+        border: 1px solid color-mix(in srgb, var(--line) 72%, transparent);
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+      }
+
+      .hero-gfx__flt-row {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 2px;
+        font-weight: 800;
+        font-size: 6.5px;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+
+      .hero-gfx__flt-pill {
+        font-size: 6.5px;
+        padding: 2px 5px;
+        border-radius: 99px;
+        background: color-mix(in srgb, var(--mint-soft) 90%, #fff);
+        color: color-mix(in srgb, var(--mint) 50%, var(--ink));
+        border: 1px solid color-mix(in srgb, var(--mint) 30%, var(--line));
+      }
+
+      .hero-gfx__flt-code {
+        font-weight: 800;
+        letter-spacing: -0.02em;
+        color: var(--ink);
+        line-height: 1.1;
+        font-size: 13px;
+      }
+
+      .hero-gfx__flt-route {
+        font-weight: 800;
+        color: var(--muted);
+        font-size: 8px;
+        margin-bottom: 2px;
+      }
+
+      .hero-gfx__flt-bar {
+        height: 4px;
+        border-radius: 99px;
+        background: color-mix(in srgb, var(--line) 80%, transparent);
+        overflow: hidden;
+      }
+
+      .hero-gfx__flt-bar span {
+        display: block;
+        width: 62%;
+        height: 100%;
+        border-radius: inherit;
+        background: linear-gradient(90deg, var(--mint), var(--sky));
+      }
+
+      /* —— Dark UI preset (shared hooks) —— */
+      .hero-gfx--dark .hero-gfx__ev {
+        background: rgba(255, 255, 255, 0.1);
+        border-color: rgba(255, 255, 255, 0.14);
+        box-shadow: none;
+      }
+
+      .hero-gfx--dark .hero-gfx__ev-title {
+        color: #f0f2f7;
+      }
+
+      .hero-gfx--dark .hero-gfx__ev-meta {
+        color: rgba(255, 255, 255, 0.62);
+      }
+
+      .hero-gfx--dark .hero-gfx__screen {
+        background: #0e1412;
+      }
+
+      .hero-gfx--dark .hero-gfx__scr-head {
+        background: rgba(22, 30, 28, 0.96);
+        border-bottom-color: rgba(255, 255, 255, 0.08);
+      }
+
+      .hero-gfx--dark .hero-gfx__scr-title {
+        color: #eef2f0;
+      }
+
+      .hero-gfx--dark .hero-gfx__scr-sub,
+      .hero-gfx--dark .hero-gfx__msg-lab,
+      .hero-gfx--dark .hero-gfx__flt-row {
+        color: rgba(255, 255, 255, 0.55);
+      }
+
+      .hero-gfx--dark .hero-gfx__scr-feed {
+        background: linear-gradient(180deg, rgba(65, 130, 241, 0.12), #0f1614);
+      }
+
+      .hero-gfx--dark .hero-gfx__msg-bub {
+        background: rgba(65, 130, 241, 0.22);
+        border-color: rgba(255, 255, 255, 0.12);
+        color: #e8ecf8;
+      }
+
+      .hero-gfx--dark .hero-gfx__msg-bub--you {
+        background: linear-gradient(135deg, rgba(80, 210, 145, 0.28), rgba(65, 130, 241, 0.2));
+        border-color: rgba(80, 210, 145, 0.35);
+      }
+
+      .hero-gfx--dark .hero-gfx__flight {
+        background: rgba(255, 255, 255, 0.08);
+        border-color: rgba(255, 255, 255, 0.12);
+      }
+
+      .hero-gfx--dark .hero-gfx__flt-code,
+      .hero-gfx--dark .hero-gfx__flt-route {
+        color: #e4e8f0;
+      }
+
+      .hero-gfx--dark .hero-gfx__flt-pill {
+        background: rgba(80, 210, 145, 0.22);
+        border-color: rgba(80, 210, 145, 0.4);
+        color: #c2f0d8;
+      }
+
+      .hero-gfx--dark .hero-gfx__flt-bar {
+        background: rgba(255, 255, 255, 0.12);
+      }
+
+      /* ═══ 20 distinct options ═══ */
+      /* 01 · Classic mint/sky + dashed ellipse */
+      .hero-gfx--opt-00 {
+        background-color: #f2faf6;
+        background-image:
+          radial-gradient(ellipse 75% 58% at 82% 12%, var(--mint-soft), transparent 58%),
+          radial-gradient(ellipse 55% 50% at 8% 92%, var(--sky-soft), transparent 55%);
+      }
+
+      .hero-gfx--opt-00 .hero-gfx__ring {
+        display: block;
+        border: 2px dashed color-mix(in srgb, var(--sky) 50%, transparent);
+        background: transparent;
+        opacity: 0.92;
+      }
+
+      .hero-gfx--opt-00 .hero-gfx__phone {
+        transform: rotate(-1deg);
+      }
+
+      /* 02 · Night mode hero */
+      .hero-gfx--opt-01 {
+        background: linear-gradient(155deg, #121c2e 0%, #1a2740 45%, #243a55 100%);
+        border-color: rgba(255, 255, 255, 0.08);
+      }
+
+      .hero-gfx--opt-01 .hero-gfx__ring {
+        display: block;
+        border: 2px dashed rgba(180, 220, 255, 0.45);
+        background: radial-gradient(circle, rgba(100, 180, 255, 0.06) 0%, transparent 62%);
+        opacity: 1;
+        box-shadow: 0 0 32px rgba(100, 200, 255, 0.15);
+      }
+
+      .hero-gfx--opt-01 .hero-gfx__phone {
+        transform: rotate(2deg);
+        box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45);
+      }
+
+      /* 03 · Clean white + dot grid, no ring */
+      .hero-gfx--opt-02 {
+        background-color: #ffffff;
+        background-image: radial-gradient(
+          circle,
+          color-mix(in srgb, var(--ink) 7%, transparent) 1px,
+          transparent 1px
+        );
+        background-size: 14px 14px;
+      }
+
+      .hero-gfx--opt-02 .hero-gfx__phone {
+        transform: none;
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.12);
+        max-width: 255px;
+      }
+
+      /* 04 · Accent burst */
+      .hero-gfx--opt-03 {
+        background: #faf7fb;
+        background-image: radial-gradient(
+          ellipse 90% 70% at 95% -5%,
+          var(--accent-soft),
+          transparent 55%
+        );
+      }
+
+      .hero-gfx--opt-03::before {
+        content: '';
+        width: 55%;
+        height: 55%;
+        top: -18%;
+        right: -12%;
+        background: radial-gradient(circle, color-mix(in srgb, var(--accent) 35%, transparent), transparent 68%);
+        filter: blur(20px);
+        opacity: 0.85;
+      }
+
+      .hero-gfx--opt-03 .hero-gfx__ring {
+        display: block;
+        border: 2px solid color-mix(in srgb, var(--mint) 45%, transparent);
+        border-style: dashed;
+        opacity: 0.85;
+      }
+
+      .hero-gfx--opt-03 .hero-gfx__phone {
+        transform: rotate(-3deg);
+      }
+
+      /* 05 · Warm sunset */
+      .hero-gfx--opt-04 {
+        background: linear-gradient(
+          165deg,
+          #fff5ef 0%,
+          #ffe8dc 35%,
+          #ffd4c4 70%,
+          #e8f4ff 100%
+        );
+      }
+
+      .hero-gfx--opt-04 .hero-gfx__ring {
+        display: block;
+        border: 3px solid rgba(230, 140, 90, 0.45);
+        border-style: dotted;
+        background: transparent;
+        opacity: 0.95;
+      }
+
+      .hero-gfx--opt-04 .hero-gfx__phone {
+        transform: rotate(4deg);
+      }
+
+      /* 06 · Striped bands */
+      .hero-gfx--opt-05 .hero-gfx__band {
+        display: block;
+        inset: 0;
+        background: repeating-linear-gradient(
+          180deg,
+          color-mix(in srgb, var(--sky-soft) 55%, #f8fafc) 0px,
+          color-mix(in srgb, var(--sky-soft) 55%, #f8fafc) 14px,
+          color-mix(in srgb, var(--mint-soft) 45%, #f8fcf9) 14px,
+          color-mix(in srgb, var(--mint-soft) 45%, #f8fcf9) 28px
+        );
+        z-index: 0;
+      }
+
+      .hero-gfx--opt-05 .hero-gfx__stage {
+        z-index: 3;
+      }
+
+      .hero-gfx--opt-05 .hero-gfx__phone {
+        transform: rotate(-2deg);
+        box-shadow: 0 14px 40px rgba(0, 0, 0, 0.14);
+      }
+
+      /* 07 · Events on the right */
+      .hero-gfx--opt-06 {
+        background: linear-gradient(135deg, #f0f9ff 0%, #f5fff9 100%);
+      }
+
+      .hero-gfx--opt-06 .hero-gfx__stage {
+        flex-direction: row-reverse;
+      }
+
+      .hero-gfx--opt-06 .hero-gfx__ring {
+        display: block;
+        width: 62%;
+        height: 88%;
+        border: 2px dashed color-mix(in srgb, var(--mint) 48%, transparent);
+      }
+
+      .hero-gfx--opt-06 .hero-gfx__phone {
+        transform: rotate(3deg);
+      }
+
+      /* 08 · Double orbit */
+      .hero-gfx--opt-07 {
+        background: #0f1419;
+        border-color: #2a3544;
+      }
+
+      .hero-gfx--opt-07 .hero-gfx__ring {
+        display: block;
+        border: 2px dashed rgba(80, 210, 145, 0.5);
+        background: transparent;
+      }
+
+      .hero-gfx--opt-07 .hero-gfx__ring::before {
+        content: '';
+        inset: 9%;
+        border: 2px dashed rgba(130, 180, 255, 0.45);
+      }
+
+      .hero-gfx--opt-07 .hero-gfx__phone {
+        transform: rotate(-2deg);
+        box-shadow: 0 14px 40px rgba(0, 0, 0, 0.5);
+      }
+
+      /* 09 · Rounded rectangle frame (not ellipse) */
+      .hero-gfx--opt-08 {
+        background: #f4f7fa;
+        background-image: radial-gradient(ellipse 80% 50% at 50% 0%, var(--sky-soft), transparent 55%);
+      }
+
+      .hero-gfx--opt-08 .hero-gfx__rect {
+        display: block;
+        z-index: 1;
+        left: 7%;
+        top: 8%;
+        width: 86%;
+        height: 84%;
+        border-radius: 22px;
+        border: 3px solid color-mix(in srgb, var(--sky) 38%, var(--line));
+        box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.5);
+      }
+
+      .hero-gfx--opt-08 .hero-gfx__phone {
+        transform: rotate(-1deg);
+      }
+
+      /* 10 · Minimal: hairline circle */
+      .hero-gfx--opt-09 {
+        background: #fdfefe;
+      }
+
+      .hero-gfx--opt-09 .hero-gfx__ring {
+        display: block;
+        border: 1px solid color-mix(in srgb, var(--ink) 12%, transparent);
+        border-style: solid;
+        opacity: 0.55;
+      }
+
+      .hero-gfx--opt-09 .hero-gfx__phone {
+        transform: none;
+        box-shadow: 0 8px 28px rgba(0, 0, 0, 0.08);
+      }
+
+      /* 11 · Lavender */
+      .hero-gfx--opt-10 {
+        background: linear-gradient(160deg, #f5f0ff 0%, #ede8ff 50%, #faf8ff 100%);
+      }
+
+      .hero-gfx--opt-10 .hero-gfx__ring {
+        display: block;
+        border: 2px dashed color-mix(in srgb, var(--accent) 38%, #8860d0);
+        background: radial-gradient(circle, rgba(200, 160, 255, 0.12) 0%, transparent 65%);
+      }
+
+      .hero-gfx--opt-10 .hero-gfx__phone {
+        transform: rotate(-4deg);
+      }
+
+      /* 12 · Noir + mint ring only */
+      .hero-gfx--opt-11 {
+        background: #0a0a0c;
+        border-color: #222;
+      }
+
+      .hero-gfx--opt-11 .hero-gfx__ring {
+        display: block;
+        border: 4px solid var(--mint);
+        border-style: solid;
+        opacity: 0.85;
+        box-shadow: 0 0 40px rgba(80, 210, 145, 0.25);
+      }
+
+      .hero-gfx--opt-11 .hero-gfx__phone {
+        transform: rotate(1deg);
+        box-shadow: 0 12px 36px rgba(0, 0, 0, 0.55);
+      }
+
+      /* 13 · Diagonal split */
+      .hero-gfx--opt-12 .hero-gfx__shard {
+        display: block;
+        inset: 0;
+        z-index: 0;
+        background: linear-gradient(
+          125deg,
+          color-mix(in srgb, var(--mint-soft) 65%, #fff) 0%,
+          color-mix(in srgb, var(--mint-soft) 65%, #fff) 48%,
+          color-mix(in srgb, var(--sky-soft) 55%, #fff) 48.5%,
+          color-mix(in srgb, var(--sky-soft) 55%, #f2f7ff) 100%
+        );
+      }
+
+      .hero-gfx--opt-12 .hero-gfx__ring {
+        display: block;
+        border: 2px dashed #fff;
+        opacity: 0.9;
+        box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.06);
+      }
+
+      .hero-gfx--opt-12 .hero-gfx__phone {
+        transform: rotate(-2deg);
+      }
+
+      /* 14 · Stacked bento (phone below events) */
+      .hero-gfx--opt-13 {
+        background: #f7faf8;
+        background-image: radial-gradient(ellipse 60% 40% at 50% 100%, var(--mint-soft), transparent 60%);
+      }
+
+      .hero-gfx--opt-13 .hero-gfx__stage {
+        flex-direction: column;
+        justify-content: center;
+        gap: 6px;
+        top: 6%;
+        bottom: 6%;
+      }
+
+      .hero-gfx--opt-13 .hero-gfx__events {
+        flex-direction: row;
+        flex-wrap: wrap;
+        max-width: 100%;
+        width: 100%;
+        justify-content: center;
+        gap: 4px;
+      }
+
+      .hero-gfx--opt-13 .hero-gfx__ev {
+        flex: 1 1 auto;
+        min-width: 0;
+        max-width: 32%;
+      }
+
+      .hero-gfx--opt-13 .hero-gfx__phone {
+        flex: 0 0 auto;
+        width: 48%;
+        max-width: 200px;
+        transform: none;
+      }
+
+      .hero-gfx--opt-13 .hero-gfx__ring {
+        display: none;
+      }
+
+      /* 15 · Neon glow ring */
+      .hero-gfx--opt-14 {
+        background: #0c1018;
+        border-color: #1e2838;
+      }
+
+      .hero-gfx--opt-14 .hero-gfx__ring {
+        display: block;
+        border: 2px solid rgba(130, 200, 255, 0.6);
+        box-shadow:
+          0 0 20px rgba(130, 200, 255, 0.35),
+          0 0 48px rgba(80, 210, 145, 0.2);
+        background: transparent;
+      }
+
+      .hero-gfx--opt-14 .hero-gfx__phone {
+        transform: rotate(-3deg);
+        box-shadow: 0 16px 44px rgba(0, 0, 0, 0.5);
+      }
+
+      /* 16 · Soft glass cards */
+      .hero-gfx--opt-15 {
+        background: linear-gradient(145deg, #e8f2ff 0%, #e8fff4 100%);
+      }
+
+      .hero-gfx--opt-15 .hero-gfx__ev {
+        background: rgba(255, 255, 255, 0.55);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        border-color: rgba(255, 255, 255, 0.7);
+      }
+
+      .hero-gfx--opt-15 .hero-gfx__ring {
+        display: block;
+        border: 2px dashed color-mix(in srgb, var(--sky) 42%, transparent);
+        opacity: 0.75;
+      }
+
+      .hero-gfx--opt-15 .hero-gfx__phone {
+        transform: rotate(2deg);
+      }
+
+      /* 17 · Phone only (no side events) */
+      .hero-gfx--opt-16 {
+        background: radial-gradient(ellipse 100% 80% at 50% 20%, var(--sky-soft), #f4f8fc);
+      }
+
+      .hero-gfx--opt-16 .hero-gfx__events {
+        display: none;
+      }
+
+      .hero-gfx--opt-16 .hero-gfx__phone {
+        flex: 0 0 58%;
+        width: 58%;
+        max-width: 270px;
+        transform: rotate(-2deg);
+      }
+
+      .hero-gfx--opt-16 .hero-gfx__ring {
+        display: block;
+        width: 52%;
+        height: 90%;
+        border: 2px dashed color-mix(in srgb, var(--sky) 45%, transparent);
+      }
+
+      /* 18 · Magazine asymmetric */
+      .hero-gfx--opt-17 {
+        background: #faf9f7;
+        background-image: linear-gradient(90deg, #f0fdf7 0%, #f0fdf7 38%, transparent 38.5%);
+      }
+
+      .hero-gfx--opt-17 .hero-gfx__stage {
+        justify-content: flex-end;
+        padding-left: 18%;
+      }
+
+      .hero-gfx--opt-17 .hero-gfx__events {
+        position: absolute;
+        left: 4%;
+        top: 50%;
+        transform: translateY(-50%);
+        max-width: 34%;
+        width: 34%;
+      }
+
+      .hero-gfx--opt-17 .hero-gfx__phone {
+        transform: rotate(5deg);
+        margin-right: 2%;
+      }
+
+      .hero-gfx--opt-17 .hero-gfx__ring {
+        display: none;
+      }
+
+      /* 19 · Conic wash + dashed */
+      .hero-gfx--opt-18 {
+        background: #f8fafb;
+      }
+
+      .hero-gfx--opt-18 .hero-gfx__ring {
+        display: block;
+        border: 2px dashed color-mix(in srgb, var(--sky) 48%, transparent);
+        background: conic-gradient(
+          from 210deg,
+          transparent,
+          color-mix(in srgb, var(--mint-soft) 50%, transparent),
+          transparent,
+          color-mix(in srgb, var(--sky-soft) 45%, transparent),
+          transparent
+        );
+        opacity: 0.95;
+      }
+
+      .hero-gfx--opt-18 .hero-gfx__phone {
+        transform: rotate(-1deg);
+      }
+
+      /* 20 · Sharp geometric shard */
+      .hero-gfx--opt-19 .hero-gfx__shard {
+        display: block;
+        inset: -20% -10% auto -10%;
+        height: 75%;
+        z-index: 0;
+        background: linear-gradient(105deg, var(--mint) 0%, var(--sky) 55%, var(--accent) 100%);
+        opacity: 0.22;
+        clip-path: polygon(0 0, 100% 15%, 85% 100%, 0 85%);
+      }
+
+      .hero-gfx--opt-19 .hero-gfx__ring {
+        display: block;
+        border: 2px solid color-mix(in srgb, var(--ink) 15%, var(--sky));
+        border-style: dashed;
+      }
+
+      .hero-gfx--opt-19 .hero-gfx__phone {
+        transform: rotate(-4deg);
+      }
+    </style>
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to grid</a>
+    <div class="wrap">
+      <header class="page-head">
+        <span class="badge">Temp · noindex</span>
+        <h1>Hero lab — 20 different directions</h1>
+        <p>
+          Three columns on desktop. Each tile is intentionally different: background, frame (ellipse, rectangle, none), layout (events left,
+          right, stacked, or hidden), and mood (light, dark, warm, minimal). Pick a direction, then refine in Figma.{' '}
+          <code>/famio-hero-lab.html</code>
+        </p>
+      </header>
+
+      <main id="main">
+        <ul class="hero-grid" id="hero-grid" aria-label="Twenty hero graphic options"></ul>
+      </main>
+    </div>
+
+    <script>
+      ;(function () {
+        'use strict'
+
+        var VARIANTS = [
+          'Classic mint/sky + dashed orbit',
+          'Night hero + bright dashed ring',
+          'White + dot grid, no orbit',
+          'Accent burst + mint dashed ring',
+          'Warm sunset + dotted rust ring',
+          'Horizontal mint/sky bands',
+          'Mirrored · events on the right',
+          'Dark + double dashed orbit',
+          'Rounded-rect frame (no ellipse)',
+          'Minimal hairline circle',
+          'Lavender field + purple dash',
+          'Noir + solid mint ring + glow',
+          'Diagonal split mint | sky',
+          'Bento · events row, phone below',
+          'Dark + neon sky ring',
+          'Glassmorphism event cards',
+          'Phone only · centered',
+          'Magazine strip · events docked left',
+          'Conic tint inside dashed orbit',
+          'Brand shard + geometric clip',
+        ]
+
+        var DARK_OPTS = { 1: true, 7: true, 11: true, 14: true }
+
+        var grid = document.getElementById('hero-grid')
+        if (!grid || VARIANTS.length !== 20) return
+
+        var eventsBlock =
+          '<aside class="hero-gfx__events">' +
+          '<div class="hero-gfx__ev hero-gfx__ev--flight">' +
+          '<span class="hero-gfx__ev-icon" aria-hidden="true">✈</span>' +
+          '<div class="hero-gfx__ev-body">' +
+          '<div class="hero-gfx__ev-title">UA 182 · On time</div>' +
+          '<div class="hero-gfx__ev-meta">Lands 3:42p · ORD</div>' +
+          '</div></div>' +
+          '<div class="hero-gfx__ev hero-gfx__ev--party">' +
+          '<span class="hero-gfx__ev-icon" aria-hidden="true">🎉</span>' +
+          '<div class="hero-gfx__ev-body">' +
+          '<div class="hero-gfx__ev-title">Leo’s party</div>' +
+          '<div class="hero-gfx__ev-meta">Sat 3:00p · Invite</div>' +
+          '</div></div>' +
+          '<div class="hero-gfx__ev hero-gfx__ev--cal">' +
+          '<span class="hero-gfx__ev-icon" aria-hidden="true">⚽</span>' +
+          '<div class="hero-gfx__ev-body">' +
+          '<div class="hero-gfx__ev-title">Soccer practice</div>' +
+          '<div class="hero-gfx__ev-meta">Field 4 · Sun 9a</div>' +
+          '</div></div>' +
+          '</aside>'
+
+        var chatBlock =
+          '<div class="hero-gfx__screen-inner">' +
+          '<div class="hero-gfx__scr-notch"></div>' +
+          '<header class="hero-gfx__scr-head">' +
+          '<div>' +
+          '<div class="hero-gfx__scr-title">Family chat</div>' +
+          '<div class="hero-gfx__scr-sub">The whole household</div>' +
+          '</div>' +
+          '<div class="hero-gfx__scr-avs" aria-hidden="true">' +
+          '<span></span><span></span><span></span>' +
+          '</div></header>' +
+          '<div class="hero-gfx__scr-feed">' +
+          '<div class="hero-gfx__msg">' +
+          '<span class="hero-gfx__msg-lab">Mom</span>' +
+          '<div class="hero-gfx__msg-bub">Grandma’s flight lands soon ✈️</div>' +
+          '</div>' +
+          '<div class="hero-gfx__flight">' +
+          '<div class="hero-gfx__flt-row"><span>Live status</span><span class="hero-gfx__flt-pill">On time</span></div>' +
+          '<div class="hero-gfx__flt-code">UA 182</div>' +
+          '<div class="hero-gfx__flt-route">SFO → ORD</div>' +
+          '<div class="hero-gfx__flt-bar"><span></span></div>' +
+          '</div>' +
+          '<div class="hero-gfx__msg hero-gfx__msg--you">' +
+          '<span class="hero-gfx__msg-lab">You</span>' +
+          '<div class="hero-gfx__msg-bub hero-gfx__msg-bub--you">On our way to pick her up!</div>' +
+          '</div>' +
+          '<div class="hero-gfx__msg">' +
+          '<span class="hero-gfx__msg-lab">Dad</span>' +
+          '<div class="hero-gfx__msg-bub">Parking now. Terminal 2 💚</div>' +
+          '</div>' +
+          '</div></div>'
+
+        var template =
+          '<div class="hero-gfx" role="img" aria-hidden="true">' +
+          '<div class="hero-gfx__shard"></div>' +
+          '<div class="hero-gfx__band"></div>' +
+          '<div class="hero-gfx__rect"></div>' +
+          '<div class="hero-gfx__ring"></div>' +
+          '<div class="hero-gfx__stage">' +
+          eventsBlock +
+          '<div class="hero-gfx__phone">' +
+          '<div class="hero-gfx__screen">' +
+          chatBlock +
+          '</div></div></div></div>'
+
+        for (var i = 0; i < 20; i++) {
+          var li = document.createElement('li')
+          li.className = 'hero-lab-cell'
+
+          var meta = document.createElement('div')
+          meta.className = 'hero-lab-meta'
+          var num = document.createElement('span')
+          num.textContent = String(i + 1).padStart(2, '0')
+          var cap = document.createElement('span')
+          cap.textContent = VARIANTS[i]
+          meta.appendChild(num)
+          meta.appendChild(cap)
+
+          var wrap = document.createElement('div')
+          wrap.innerHTML = template
+          var gfx = wrap.firstElementChild
+          gfx.classList.add('hero-gfx--opt-' + String(i).padStart(2, '0'))
+          if (DARK_OPTS[i]) {
+            gfx.classList.add('hero-gfx--dark')
+          }
+
+          li.appendChild(meta)
+          li.appendChild(gfx)
+          grid.appendChild(li)
+        }
+      })()
+    </script>
+  </body>
+</html>
