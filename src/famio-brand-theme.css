@@ -1,0 +1,254 @@
+/* Marketing site theme (purple-forward flyers, soft blobs, dotted wash).
+   Applied site-wide via `.famio-app` wrapper in main.tsx. */
+
+.famio-app {
+  /* Palette inspired by flyer mockups (purple-forward, airy, soft blobs). */
+  --brand-mint: #20c997;
+  --brand-blue: #3b82f6;
+  --brand-purple: #5d3fde;
+  --brand-pink: #ec4899;
+  --brand-navy: #0f172a;
+  --brand-magenta: var(--brand-purple);
+
+  --ink: var(--brand-navy);
+  --ink-muted: #64748b;
+  --paper: #f8fafc;
+  --paper-elevated: #ffffff;
+  --line: rgba(15, 23, 42, 0.07);
+
+  --accent: var(--brand-purple);
+  --accent-hover: #4f29c7;
+  --accent-soft: rgba(93, 63, 222, 0.12);
+  --accent-glow: rgba(93, 63, 222, 0.35);
+
+  --sky: var(--brand-blue);
+  --sky-soft: rgba(59, 130, 246, 0.18);
+
+  --mint: var(--brand-mint);
+  --mint-soft: rgba(32, 201, 151, 0.14);
+
+  --pink: var(--brand-pink);
+  --pink-soft: rgba(236, 72, 153, 0.14);
+
+  --butter: #60a5fa;
+  --butter-soft: rgba(96, 165, 250, 0.16);
+  --lilac: #a78bfa;
+  --lilac-soft: rgba(167, 139, 250, 0.18);
+
+  --sand: #e8eaf4;
+
+  --shadow-sm: 0 2px 4px rgba(15, 23, 42, 0.04);
+  --shadow-md: 0 12px 32px -8px rgba(79, 46, 200, 0.12),
+    0 4px 12px rgba(15, 23, 42, 0.06);
+  --shadow-lg: 0 24px 64px -12px rgba(79, 46, 200, 0.22),
+    0 18px 40px -14px rgba(15, 23, 42, 0.1);
+  --shadow-inset: inset 0 1px 0 rgba(255, 255, 255, 0.92);
+
+  --map-demo-surface: #ecfaf5;
+  --map-demo-building: #c9f5e7;
+  --map-demo-building-muted: #abf0dc;
+  --map-demo-chrome: #f4fcf9;
+
+  font-family: var(--font-body);
+  min-height: 100%;
+}
+
+.famio-app ::selection {
+  background: color-mix(in srgb, var(--accent-soft) 92%, transparent);
+  color: var(--ink);
+}
+
+.famio-app :focus-visible {
+  outline-color: var(--accent);
+}
+
+/* Softer ambience + flyer-style dot wash */
+.famio-app .page-bg {
+  background:
+    radial-gradient(
+      ellipse 90% 70% at -5% -10%,
+      color-mix(in srgb, var(--brand-purple) 22%, transparent),
+      transparent 55%
+    ),
+    radial-gradient(
+      ellipse 80% 62% at 105% -5%,
+      color-mix(in srgb, var(--brand-blue) 20%, transparent),
+      transparent 58%
+    ),
+    radial-gradient(
+      ellipse 70% 52% at 50% 110%,
+      color-mix(in srgb, var(--brand-mint) 16%, transparent),
+      transparent 55%
+    ),
+    radial-gradient(
+      ellipse 60% 45% at 95% 90%,
+      color-mix(in srgb, var(--brand-pink) 14%, transparent),
+      transparent 50%
+    ),
+    var(--paper);
+}
+
+.famio-app .page-bg::after {
+  opacity: 0.038;
+  background-image: radial-gradient(
+    circle,
+    rgba(93, 63, 222, 0.9) 0.95px,
+    transparent 1px
+  );
+  background-size: 22px 22px;
+}
+
+.famio-app .header {
+  top: 0;
+  background:
+    radial-gradient(
+      ellipse 90% 70% at -5% -10%,
+      color-mix(in srgb, var(--brand-purple) 22%, transparent),
+      transparent 55%
+    ),
+    radial-gradient(
+      ellipse 80% 62% at 105% -5%,
+      color-mix(in srgb, var(--brand-blue) 20%, transparent),
+      transparent 58%
+    ),
+    radial-gradient(
+      ellipse 70% 52% at 50% 110%,
+      color-mix(in srgb, var(--brand-mint) 16%, transparent),
+      transparent 55%
+    ),
+    radial-gradient(
+      ellipse 60% 45% at 95% 90%,
+      color-mix(in srgb, var(--brand-pink) 14%, transparent),
+      transparent 50%
+    ),
+    color-mix(in srgb, var(--paper-elevated) 86%, transparent);
+  backdrop-filter: blur(12px);
+  border-bottom-color: color-mix(in srgb, var(--line) 45%, transparent);
+}
+
+.famio-app .header--nav-open {
+  background:
+    radial-gradient(
+      ellipse 90% 70% at -5% -10%,
+      color-mix(in srgb, var(--brand-purple) 22%, transparent),
+      transparent 55%
+    ),
+    radial-gradient(
+      ellipse 80% 62% at 105% -5%,
+      color-mix(in srgb, var(--brand-blue) 20%, transparent),
+      transparent 58%
+    ),
+    radial-gradient(
+      ellipse 70% 52% at 50% 110%,
+      color-mix(in srgb, var(--brand-mint) 16%, transparent),
+      transparent 55%
+    ),
+    radial-gradient(
+      ellipse 60% 45% at 95% 90%,
+      color-mix(in srgb, var(--brand-pink) 14%, transparent),
+      transparent 50%
+    ),
+    color-mix(in srgb, var(--paper-elevated) 92%, var(--paper));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .famio-app .header,
+  .famio-app .page-bg::after {
+    backdrop-filter: none;
+  }
+}
+
+/* Hero typography — bolder, flyer-like gradient headline */
+.famio-app .eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.famio-app .hero h1 {
+  font-weight: 800;
+  line-height: 1.06;
+  background: linear-gradient(
+    100deg,
+    var(--brand-navy) 0%,
+    var(--brand-navy) 22%,
+    var(--brand-purple) 52%,
+    var(--brand-blue) 92%
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+.famio-app .hero-lead {
+  font-weight: 700;
+}
+
+/* Primary CTAs → purple-blue pill like mockups */
+.famio-app .btn-primary {
+  color: #fff;
+  border: none;
+  background:
+    linear-gradient(
+      120deg,
+      var(--brand-blue) 0%,
+      var(--brand-purple) 55%,
+      color-mix(in srgb, var(--brand-purple) 75%, var(--brand-pink))
+        100%
+    ),
+    transparent;
+  background-size: 100% 100%;
+  box-shadow:
+    var(--shadow-sm),
+    0 10px 28px rgba(93, 63, 222, 0.28),
+    var(--shadow-inset);
+}
+
+.famio-app .btn-primary:hover {
+  filter: saturate(1.08) brightness(1.06);
+}
+
+.famio-app .btn-ghost {
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.75);
+}
+
+.famio-app .btn-ghost:hover {
+  background: rgba(255, 255, 255, 0.95);
+  border-color: color-mix(in srgb, var(--accent) 28%, var(--line));
+}
+
+/* Cards: extra-round, airy */
+.famio-app .showcase-card {
+  border-radius: 2rem;
+  border-width: 1.5px;
+}
+
+.famio-app .tier-card {
+  border-radius: 2rem;
+}
+
+.famio-app .section-title::after {
+  height: 4px;
+  width: 3.75rem;
+  background: linear-gradient(
+    90deg,
+    var(--brand-purple),
+    var(--brand-blue),
+    var(--brand-mint)
+  );
+}
+
+.famio-app .famio-wow-aurora,
+.famio-app .famio-moments-glow {
+  opacity: 0.45;
+}
+
+.famio-app .download-card {
+  border-radius: 2.25rem;
+}
+
+.famio-app .beta-program-card {
+  border-radius: 2rem;
+}

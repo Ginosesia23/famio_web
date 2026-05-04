@@ -1,9 +1,15 @@
-export type FlightProgressStatus = 'delayed' | 'on-time' | 'early'
+export type FlightProgressStatus =
+  | 'delayed'
+  | 'on-time'
+  | 'early'
+  /** Departed behind schedule, but on track to land ahead of the published arrival */
+  | 'recovery'
 
 const fillClass: Record<FlightProgressStatus, string> = {
   delayed: 'hero-flight-track-fill--delayed',
   'on-time': 'hero-flight-track-fill--on-time',
   early: 'hero-flight-track-fill--early',
+  recovery: 'hero-flight-track-fill--recovery',
 }
 
 function FlightPlaneGlyph() {
@@ -32,8 +38,7 @@ type FlightProgressBarProps = {
 }
 
 /**
- * Bar fill reflects flight status (delayed / on-time / early); plane stays
- * brand blue.
+ * Bar fill is a solid color per flight status; plane stays brand blue.
  */
 export function FlightProgressBar({ progress, status }: FlightProgressBarProps) {
   const pct = Math.min(100, Math.max(0, progress))

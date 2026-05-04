@@ -25,16 +25,7 @@
         --card: #ffffff;
         --radius: 14px;
         --font-ui: system-ui, -apple-system, 'Segoe UI', sans-serif;
-      }
-
-      @media (prefers-color-scheme: dark) {
-        :root {
-          --ink: #f0f2f7;
-          --muted: #a8b0bd;
-          --line: #343b48;
-          --paper: #0e1117;
-          --card: #161b24;
-        }
+        color-scheme: light;
       }
 
       *,
@@ -154,12 +145,6 @@
         box-shadow: 0 8px 28px rgba(0, 0, 0, 0.06);
       }
 
-      @media (prefers-color-scheme: dark) {
-        .logo-cell:hover {
-          box-shadow: 0 8px 28px rgba(0, 0, 0, 0.35);
-        }
-      }
-
       .logo-cell__meta {
         display: flex;
         align-items: baseline;
@@ -192,12 +177,6 @@
         padding: 0.35rem 0.25rem;
         border-radius: 10px;
         background: color-mix(in srgb, var(--paper) 88%, transparent);
-      }
-
-      @media (prefers-color-scheme: dark) {
-        .logo-mark {
-          background: color-mix(in srgb, var(--card) 70%, var(--ink));
-        }
       }
 
       /* Variant: tight bold wordmark */

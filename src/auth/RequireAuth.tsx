@@ -1,0 +1,29 @@
+import { Navigate, useLocation } from 'react-router-dom'
+import type { ReactNode } from 'react'
+import { useAuth } from './AuthContext'
+
+export function RequireAuth({ children }: { children: ReactNode }) {
+  const { user, ready } = useAuth()
+  const location = useLocation()
+
+  if (!ready) {
+    return (
+      <div className="admin-route-loading" style={{ minHeight: '100svh' }}>
+        <div className="admin-route-loading-dot" aria-hidden />
+        <span className="visually-hidden">Loading…</span>
+      </div>
+    )
+  }
+
+  if (!user) {
+    return (
+      <Navigate
+        to="/login"
+        replace
+        state={{ from: location.pathname }}
+      />
+    )
+  }
+
+  return <>{children}</>
+}

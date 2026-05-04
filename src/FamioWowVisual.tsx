@@ -1,5 +1,7 @@
 /** Decorative visual: layered “deck” of map, flight, and family chat — mint & sky accents */
 
+import { FlightProgressBar } from './FlightProgressBar'
+
 export function FamioWowVisual() {
   return (
     <div className="famio-wow-visual" aria-hidden={true}>
@@ -53,18 +55,24 @@ export function FamioWowVisual() {
           </svg>
         </div>
 
-        <div className="famio-wow-deck-card famio-wow-deck-card--flight famio-wow-deck-card--flight-delayed">
+        <div className="famio-wow-deck-card famio-wow-deck-card--flight famio-wow-deck-card--flight-recovery">
           <span className="famio-wow-deck-flight-brand">Famio</span>
           <span className="famio-wow-deck-flight-row">
             <span className="famio-wow-deck-flight-code">UA 182</span>
-            <span className="famio-wow-deck-flight-pill famio-wow-deck-flight-pill--delayed">
-              Delayed
+            <span className="famio-wow-deck-flight-pill famio-wow-deck-flight-pill--early">
+              Arriving early
             </span>
           </span>
-          <span className="famio-wow-deck-flight-was">Was 3:14 PM</span>
+          <span className="famio-wow-deck-flight-depart">
+            Departed 22 min late
+          </span>
+          <span className="famio-wow-deck-flight-was">Sched. arrival 3:14 PM</span>
           <span className="famio-wow-deck-flight-route">SFO → ORD</span>
+          <div className="famio-wow-deck-flight-progress">
+            <FlightProgressBar progress={58} status="recovery" />
+          </div>
           <span className="famio-wow-deck-flight-meta">
-            +28 min · Est. 3:42 PM · Gate B12
+            Est. 3:06 PM · 8 min early · Gate B12
           </span>
         </div>
 

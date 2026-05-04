@@ -32,8 +32,8 @@ function scheduleNextFlightTick(
 }
 
 /**
- * Lock Screen preview using the same device chrome as the hero, with a Famio
- * flight card showing a delay that nudges on irregular intervals.
+ * Lock Screen preview: live flight where departure was late, but the jet is
+ * making up time toward an arrival ahead of the published schedule.
  */
 export function FamioLiveWidgetsVisual() {
   const [lockNow, setLockNow] = useState(() => new Date())
@@ -43,14 +43,18 @@ export function FamioLiveWidgetsVisual() {
     s.setMinutes(s.getMinutes() + 28 + Math.floor(Math.random() * 10))
     return s
   })
-  const [delayMinutes, setDelayMinutes] = useState(
-    () => 22 + Math.floor(Math.random() * 14),
+  const [departureDelayMin] = useState(
+    () => 18 + Math.floor(Math.random() * 16),
+  )
+  /** Minutes earlier than scheduled arrival we now expect (made-up time) */
+  const [earlyVsSchedMin, setEarlyVsSchedMin] = useState(
+    () => 6 + Math.floor(Math.random() * 8),
   )
 
   const revisedLanding = useMemo(
     () =>
-      new Date(scheduledLanding.getTime() + delayMinutes * 60 * 1000),
-    [scheduledLanding, delayMinutes],
+      new Date(scheduledLanding.getTime() - earlyVsSchedMin * 60 * 1000),
+    [scheduledLanding, earlyVsSchedMin],
   )
 
   useEffect(() => {
@@ -63,9 +67,9 @@ export function FamioLiveWidgetsVisual() {
     const reduceMotion = mq.matches
 
     return scheduleNextFlightTick(reduceMotion, () => {
-      setDelayMinutes((d) => {
-        const delta = Math.floor(randomBetween(-2, 5))
-        return Math.min(52, Math.max(14, d + delta))
+      setEarlyVsSchedMin((m) => {
+        const delta = Math.floor(randomBetween(-2, 3))
+        return Math.min(14, Math.max(5, m + delta))
       })
       setTrackProgress((p) => {
         const next = p + randomBetween(-0.014, 0.009)
@@ -110,15 +114,18 @@ export function FamioLiveWidgetsVisual() {
                   <p className="live-widgets-lock-date">{lockDate}</p>
                 </div>
                 <div className="live-widgets-lock-footer">
-                  <div className="hero-flight-card live-widgets-live-flight live-widgets-live-flight--delayed">
+                  <div className="hero-flight-card live-widgets-live-flight live-widgets-live-flight--recovery">
                     <div className="hero-flight-card-top">
                       <span className="hero-flight-badge">Famio</span>
-                      <span className="hero-flight-pill hero-flight-pill--delayed">
-                        Delayed
+                      <span className="hero-flight-pill hero-flight-pill--early">
+                        Arriving early
                       </span>
                     </div>
+                    <p className="live-widgets-flight-depart">
+                      Departed {departureDelayMin} min late
+                    </p>
                     <p className="live-widgets-flight-was">
-                      Was {scheduledStr}
+                      Sched. arrival {scheduledStr}
                     </p>
                     <div className="hero-flight-airline">
                       <span className="hero-flight-code">UA 182</span>
@@ -131,11 +138,11 @@ export function FamioLiveWidgetsVisual() {
                       <span className="hero-flight-arrow">→</span>
                       <span>ORD</span>
                     </div>
-                    <FlightProgressBar progress={pct} status="delayed" />
+                    <FlightProgressBar progress={pct} status="recovery" />
                     <div className="hero-flight-meta">
-                      <span>+{delayMinutes} min</span>
-                      <span className="hero-flight-dot" />
                       <span>Est. {revisedStr}</span>
+                      <span className="hero-flight-dot" />
+                      <span>{earlyVsSchedMin} min early</span>
                       <span className="hero-flight-dot" />
                       <span>Gate B12</span>
                     </div>

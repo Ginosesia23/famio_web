@@ -1,0 +1,471 @@
+/* Decorative UI mockups tuned to Famio flyer style (purple/blue/green/pink,
+   rounded “app card” surfaces, soft shadows). Scoped under .famio-app. */
+
+/* --- Hero phone & chat feed --- */
+.famio-app .hero-device-blob--a {
+  background: radial-gradient(
+    circle at 30% 30%,
+    color-mix(in srgb, var(--brand-purple) 35%, transparent),
+    transparent 55%
+    ),
+    linear-gradient(
+      145deg,
+      color-mix(in srgb, var(--brand-blue) 22%, transparent),
+      color-mix(in srgb, var(--brand-mint) 18%, transparent)
+    );
+}
+
+.famio-app .hero-device-blob--b {
+  background: radial-gradient(
+    circle at 70% 40%,
+    color-mix(in srgb, var(--brand-pink) 26%, transparent),
+    transparent 50%
+    ),
+    linear-gradient(
+      165deg,
+      color-mix(in srgb, var(--brand-purple) 24%, transparent),
+      color-mix(in srgb, var(--brand-mint) 20%, transparent)
+    );
+}
+
+.famio-app .hero-phone-bezel {
+  background: linear-gradient(
+    160deg,
+    color-mix(in srgb, var(--brand-navy) 88%, var(--brand-purple)) 0%,
+    color-mix(in srgb, var(--brand-navy) 72%, var(--brand-blue)) 45%,
+    color-mix(in srgb, #1e1b4b 92%, transparent) 100%
+  );
+  box-shadow:
+    0 6px 8px rgba(93, 63, 222, 0.12),
+    0 24px 52px -14px rgba(79, 46, 200, 0.35),
+    0 0 0 1px color-mix(in srgb, var(--brand-purple) 28%, transparent),
+    inset 0 1px 0 rgba(255, 255, 255, 0.16);
+}
+
+.famio-app .hero-phone-notch {
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--brand-navy) 75%, var(--brand-purple)),
+    var(--brand-navy)
+  );
+}
+
+.famio-app .hero-phone-feed {
+  background: linear-gradient(
+    185deg,
+    color-mix(in srgb, var(--sky-soft) 35%, var(--paper)),
+    color-mix(in srgb, var(--accent-soft) 22%, var(--paper-elevated)) 55%,
+    var(--paper-elevated)
+  );
+}
+
+/* Calendar-flyer style: muted incoming, purple‑tint outgoing */
+.famio-app .hero-msg:not(.hero-msg--you) .hero-msg-bubble {
+  background: color-mix(
+    in srgb,
+    var(--paper-elevated) 88%,
+    var(--sand)
+  );
+  border-color: color-mix(in srgb, var(--line) 88%, transparent);
+  border-bottom-left-radius: 0.45rem;
+  box-shadow:
+    0 2px 10px rgba(15, 23, 42, 0.05),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+.famio-app .hero-msg-bubble--you {
+  background: linear-gradient(
+    145deg,
+    color-mix(in srgb, var(--accent-soft) 65%, var(--paper-elevated)),
+    color-mix(in srgb, var(--sky-soft) 50%, var(--paper-elevated))
+  );
+  border-color: color-mix(in srgb, var(--accent) 32%, var(--line));
+}
+
+.famio-app .hero-flight-card,
+.famio-app .live-widgets-live-flight.hero-flight-card {
+  border-radius: 1.15rem;
+  border-color: color-mix(in srgb, var(--accent) 22%, var(--line));
+  background: linear-gradient(
+    180deg,
+    var(--paper-elevated),
+    color-mix(in srgb, var(--sky-soft) 12%, var(--paper-elevated))
+  );
+  box-shadow:
+    0 4px 14px rgba(93, 63, 222, 0.08),
+    0 0 0 1px color-mix(in srgb, var(--accent) 12%, transparent);
+}
+
+.famio-app .hero-flight-card--recovery {
+  box-shadow:
+    0 4px 14px rgba(32, 201, 151, 0.12),
+    0 0 0 1px color-mix(in srgb, var(--mint) 28%, var(--line));
+}
+
+.famio-app .hero-flight-badge {
+  background: linear-gradient(
+    100deg,
+    var(--brand-purple),
+    var(--brand-blue)
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  letter-spacing: 0.14em;
+}
+
+.famio-app .hero-flight-pill {
+  background: linear-gradient(
+    120deg,
+    color-mix(in srgb, var(--mint-soft) 90%, var(--paper)),
+    var(--mint-soft)
+  );
+  border-color: color-mix(in srgb, var(--mint) 40%, var(--line));
+}
+
+.famio-app .hero-flight-track-fill--on-time {
+  background: linear-gradient(
+    90deg,
+    var(--brand-blue),
+    var(--brand-mint)
+  );
+}
+
+.famio-app .hero-flight-track-fill--early {
+  background: linear-gradient(
+    90deg,
+    var(--brand-purple),
+    color-mix(in srgb, var(--brand-pink) 55%, var(--brand-purple))
+  );
+}
+
+.famio-app .hero-flight-track-fill--recovery {
+  background: linear-gradient(
+    90deg,
+    color-mix(in srgb, var(--brand-mint) 92%, #0d9488),
+    var(--brand-mint)
+  );
+}
+
+.famio-app .hero-flight-track .hero-flight-track-plane {
+  color: var(--brand-blue);
+}
+
+/* --- Features: chat mock, travel, map frame --- */
+.famio-app .chat-phone {
+  border-radius: 1.85rem;
+  border-color: color-mix(in srgb, var(--accent) 14%, var(--line));
+  background: linear-gradient(
+    180deg,
+    var(--paper-elevated),
+    color-mix(in srgb, var(--sky-soft) 15%, var(--paper-elevated))
+  );
+  box-shadow:
+    0 10px 40px -16px rgba(93, 63, 222, 0.25),
+    var(--shadow-inset);
+}
+
+.famio-app .chat-msg--in {
+  background: color-mix(in srgb, var(--accent-soft) 45%, var(--paper-elevated));
+  border: 1px solid color-mix(in srgb, var(--accent) 22%, var(--line));
+  border-bottom-left-radius: 0.35rem;
+  box-shadow: 0 2px 8px rgba(93, 63, 222, 0.06);
+}
+
+.famio-app .chat-msg--out {
+  background: color-mix(in srgb, var(--mint-soft) 52%, var(--paper-elevated));
+  border: 1px solid color-mix(in srgb, var(--mint) 24%, var(--line));
+}
+
+.famio-app .chat-msg--card {
+  background: linear-gradient(
+    125deg,
+    color-mix(in srgb, var(--accent-soft) 75%, transparent),
+    color-mix(in srgb, var(--sky-soft) 55%, transparent)
+  );
+  border-radius: 0.95rem;
+  border-color: color-mix(in srgb, var(--accent) 18%, var(--line));
+}
+
+.famio-app .travel-banner {
+  background: linear-gradient(
+    90deg,
+    var(--brand-blue),
+    var(--brand-purple),
+    color-mix(in srgb, var(--brand-purple) 70%, var(--brand-pink))
+  );
+  box-shadow:
+    0 8px 22px rgba(93, 63, 222, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.35);
+}
+
+.famio-app .travel-pin {
+  box-shadow:
+    0 2px 10px rgba(59, 130, 246, 0.25),
+    0 0 0 3px rgba(255, 255, 255, 0.95);
+}
+
+.famio-app .travel-track-fill {
+  background: linear-gradient(
+    90deg,
+    var(--brand-mint),
+    var(--brand-blue),
+    var(--brand-purple)
+  );
+}
+
+.famio-app .feature-map-demo {
+  border-radius: 1.65rem;
+  box-shadow:
+    0 10px 38px -12px rgba(59, 130, 246, 0.18),
+    0 14px 40px -14px rgba(93, 63, 222, 0.12),
+    var(--shadow-inset);
+}
+
+.famio-app .family-map-svg__pin {
+  stroke-width: 3px;
+  filter: drop-shadow(0 3px 5px rgba(15, 23, 42, 0.12));
+}
+
+/* --- Lock Screen flight widget --- */
+.famio-app .live-widgets-lock-body--light .live-widgets-lock-wallpaper {
+  background: linear-gradient(
+    205deg,
+    color-mix(in srgb, var(--accent-soft) 55%, var(--paper-elevated)),
+    color-mix(in srgb, var(--sky-soft) 42%, var(--paper-elevated)) 45%,
+    var(--paper-elevated)
+  );
+}
+
+.famio-app .live-widgets-lock-body--light .live-widgets-lock-wallpaper::after {
+  background:
+    radial-gradient(
+      ellipse 80% 52% at 15% 8%,
+      color-mix(in srgb, var(--brand-purple) 18%, transparent),
+      transparent 55%
+    ),
+    radial-gradient(
+      ellipse 70% 46% at 88% 32%,
+      color-mix(in srgb, var(--brand-blue) 16%, transparent),
+      transparent 50%
+    ),
+    radial-gradient(
+      ellipse 60% 50% at 50% 115%,
+      color-mix(in srgb, var(--brand-mint) 14%, transparent),
+      transparent 45%
+    );
+}
+
+.famio-app .live-widgets-lock-body--light .live-widgets-lock-time {
+  background: linear-gradient(
+    100deg,
+    var(--brand-navy),
+    var(--brand-purple),
+    var(--brand-blue)
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+/* --- Family Moments panel --- */
+.famio-app .moments-visual-panel {
+  border-radius: 1.75rem;
+  border-color: color-mix(in srgb, var(--accent) 16%, var(--line));
+  background: linear-gradient(
+    165deg,
+    color-mix(in srgb, var(--paper-elevated) 94%, var(--accent-soft)),
+    var(--paper-elevated)
+  );
+  box-shadow:
+    0 16px 48px -20px rgba(93, 63, 222, 0.22),
+    var(--shadow-inset);
+}
+
+.famio-app .moments-visual-pill {
+  background: linear-gradient(
+    90deg,
+    var(--accent-soft),
+    color-mix(in srgb, var(--sky-soft) 60%, transparent)
+  );
+  border-color: color-mix(in srgb, var(--accent) 28%, var(--line));
+  color: var(--accent-hover);
+}
+
+.famio-app .moments-visual-timeline::before {
+  background: linear-gradient(
+    180deg,
+    transparent,
+    var(--accent-soft) 35%,
+    var(--mint-soft) 72%,
+    transparent
+  );
+}
+
+/* --- Wow mini illustrations (SVG strokes / fills referenced from CSS classes) --- */
+.famio-app .wow-chat-grad-stop-0 {
+  stop-color: color-mix(
+    in srgb,
+    var(--paper-elevated) 90%,
+    var(--accent-soft)
+  );
+}
+
+.famio-app .wow-chat-grad-stop-1 {
+  stop-color: color-mix(in srgb, var(--sky-soft) 62%, var(--paper-elevated));
+}
+
+.famio-app .wow-chat-bubble-accent {
+  fill: url(#wow-chat-accent-grad);
+  stroke: color-mix(in srgb, var(--accent) 40%, var(--line));
+}
+
+.famio-app .wow-travel-grad-stop-0 {
+  stop-color: color-mix(
+    in srgb,
+    var(--accent-soft) 35%,
+    var(--paper-elevated)
+  );
+}
+
+.famio-app .wow-travel-grad-stop-1 {
+  stop-color: color-mix(
+    in srgb,
+    var(--sky-soft) 45%,
+    var(--paper-elevated)
+  );
+}
+
+.famio-app .wow-travel-eta-chip {
+  stroke: color-mix(in srgb, var(--accent) 35%, var(--line));
+  filter: drop-shadow(0 3px 6px rgba(93, 63, 222, 0.12));
+}
+
+.famio-app .famio-wow-mini--map .famio-wow-mini-canvas--map {
+  clip-path: inset(0 round 14px);
+}
+
+.famio-app .famio-wow-mini-map-route-line {
+  stroke: color-mix(in srgb, var(--accent) 35%, var(--sky));
+}
+
+.famio-app .famio-wow-mini--glance {
+  background: linear-gradient(
+    155deg,
+    color-mix(in srgb, var(--accent-soft) 40%, var(--paper-elevated)),
+    color-mix(in srgb, var(--mint-soft) 35%, var(--paper-elevated))
+  );
+}
+
+.famio-app .wow-glance-dot {
+  fill: var(--accent);
+}
+
+/* --- Wow layered deck --- */
+.famio-app .famio-wow-deck-blob--a {
+  background: radial-gradient(
+    circle,
+    color-mix(in srgb, var(--brand-purple) 25%, transparent),
+    transparent 62%
+  );
+}
+
+.famio-app .famio-wow-deck-blob--b {
+  background: radial-gradient(
+    circle,
+    color-mix(in srgb, var(--brand-blue) 22%, transparent),
+    transparent 58%
+  );
+}
+
+.famio-app .famio-wow-deck-arc-path {
+  stroke: color-mix(in srgb, var(--accent) 35%, transparent);
+}
+
+.famio-app .famio-wow-deck-arc-path--soft {
+  stroke: color-mix(in srgb, var(--brand-mint) 38%, transparent);
+}
+
+.famio-app .famio-wow-deck-card {
+  border-radius: 1.35rem;
+}
+
+.famio-app .famio-wow-deck-card--map {
+  border-top: 3px solid color-mix(in srgb, var(--mint) 55%, var(--line));
+}
+
+/* Gradient top stripe without border-image so rounded corners stay clean */
+.famio-app .famio-wow-deck-card--flight {
+  border-top: none;
+}
+
+.famio-app .famio-wow-deck-card--flight::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 3px;
+  border-radius: 1.35rem 1.35rem 0 0;
+  background: linear-gradient(
+    90deg,
+    var(--brand-blue),
+    var(--brand-purple)
+  );
+}
+
+.famio-app .famio-wow-deck-map-surface {
+  fill: color-mix(
+    in srgb,
+    var(--sky-soft) 28%,
+    color-mix(in srgb, var(--mint-soft) 22%, var(--paper-elevated))
+  );
+}
+
+.famio-app .famio-wow-deck-map-pin--c {
+  fill: var(--brand-pink);
+}
+
+.famio-app .famio-wow-deck-flight-depart {
+  color: color-mix(in srgb, var(--brand-blue) 45%, var(--ink-muted));
+}
+
+.famio-app .famio-wow-deck-chat-head {
+  background: linear-gradient(
+    90deg,
+    color-mix(in srgb, var(--accent-soft) 35%, var(--paper-elevated)),
+    color-mix(in srgb, var(--sky-soft) 25%, var(--paper-elevated))
+  );
+}
+
+.famio-app .famio-wow-deck-bubble--them {
+  background: color-mix(
+    in srgb,
+    var(--paper-elevated) 90%,
+    var(--sand)
+  );
+  border-color: color-mix(in srgb, var(--line) 92%, transparent);
+}
+
+.famio-app .famio-wow-deck-bubble--you {
+  background: linear-gradient(
+    145deg,
+    color-mix(in srgb, var(--accent-soft) 55%, var(--paper)),
+    color-mix(in srgb, var(--sky-soft) 40%, var(--paper))
+  );
+  border-color: color-mix(in srgb, var(--accent) 30%, var(--line));
+}
+
+.famio-app .famio-wow-deck-badge {
+  border-color: transparent;
+  background: linear-gradient(
+    135deg,
+    var(--brand-blue),
+    var(--brand-purple),
+    color-mix(in srgb, var(--brand-purple) 75%, var(--brand-pink))
+  );
+  color: #fff;
+  border-width: 0;
+  text-shadow: 0 1px 2px rgba(15, 23, 42, 0.2);
+  box-shadow: 0 10px 28px rgba(93, 63, 222, 0.38);
+}

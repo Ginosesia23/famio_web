@@ -12,6 +12,11 @@ export function WowMiniChat() {
         xmlns="http://www.w3.org/2000/svg"
       >
         <defs>
+          <linearGradient id="wow-chat-accent-grad" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stopColor="#ede9fe" />
+            <stop offset="55%" stopColor="#ddd6fe" />
+            <stop offset="100%" stopColor="#c4b5fd" />
+          </linearGradient>
           <linearGradient id="wow-chat-bg" x1="40" y1="28" x2="160" y2="148" gradientUnits="userSpaceOnUse">
             <stop offset="0" className="wow-chat-grad-stop-0" />
             <stop offset="1" className="wow-chat-grad-stop-1" />
@@ -162,8 +167,8 @@ export function WowMiniField() {
             r="68%"
           >
             <stop offset="0%" stopColor="#fff" stopOpacity="0.95" />
-            <stop offset="0.4" stopColor="#ffc14d" />
-            <stop offset="1" stopColor="#e0780a" />
+            <stop offset="0.45" stopColor="#6ee7b7" />
+            <stop offset="1" stopColor="#10b981" />
           </radialGradient>
         </defs>
         <rect x="8" y="8" width="184" height="132" rx="12" className="wow-field-chrome" />
@@ -209,6 +214,28 @@ export function WowMiniPlans() {
       >
         <defs>
           <linearGradient
+            id="wow-plans-free"
+            x1="0"
+            y1="0"
+            x2="1"
+            y2="0"
+            gradientUnits="objectBoundingBox"
+          >
+            <stop offset="0" stopColor="#a7f3d0" />
+            <stop offset="1" stopColor="#34d399" />
+          </linearGradient>
+          <linearGradient
+            id="wow-plans-plus"
+            x1="0"
+            y1="0"
+            x2="1"
+            y2="0"
+            gradientUnits="objectBoundingBox"
+          >
+            <stop offset="0" stopColor="#93c5fd" />
+            <stop offset="1" stopColor="#3b82f6" />
+          </linearGradient>
+          <linearGradient
             id="wow-plans-gold"
             x1="0"
             y1="0"
@@ -216,19 +243,36 @@ export function WowMiniPlans() {
             y2="0"
             gradientUnits="objectBoundingBox"
           >
-            <stop offset="0" stopColor="#f5d56a" />
-            <stop offset="1" stopColor="#d4a41f" />
+            <stop offset="0" stopColor="#a78bfa" />
+            <stop offset="0.55" stopColor="#7c3aed" />
+            <stop offset="1" stopColor="#ec4899" />
           </linearGradient>
         </defs>
         <rect x="22" y="30" width="156" height="88" rx="14" className="wow-plans-panel" />
         <g className="wow-plans-row wow-plans-row--free">
-          <rect x="36" y="44" width="128" height="20" rx="8" className="wow-plans-bar wow-plans-bar--free" />
+          <rect
+            x="36"
+            y="44"
+            width="128"
+            height="20"
+            rx="8"
+            fill="url(#wow-plans-free)"
+            className="wow-plans-bar wow-plans-bar--free"
+          />
           <text x="48" y="58" className="wow-plans-svg-label">
             Free
           </text>
         </g>
         <g className="wow-plans-row wow-plans-row--plus">
-          <rect x="36" y="72" width="128" height="20" rx="8" className="wow-plans-bar wow-plans-bar--plus" />
+          <rect
+            x="36"
+            y="72"
+            width="128"
+            height="20"
+            rx="8"
+            fill="url(#wow-plans-plus)"
+            className="wow-plans-bar wow-plans-bar--plus"
+          />
           <text x="48" y="86" className="wow-plans-svg-label">
             Plus
           </text>

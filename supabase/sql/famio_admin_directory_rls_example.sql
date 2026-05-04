@@ -1,0 +1,14 @@
+-- =============================================================================
+-- ⚠️ Prefer: supabase/sql/famio_admin_table_access.sql (staff-only SELECT)
+-- =============================================================================
+-- This file used to grant SELECT to all `authenticated` users (USING true),
+-- which includes every app user in your project — use only in throwaway dev.
+--
+-- Production: run `famio_admin_table_access.sql` — it adds
+--   • `famio_jwt_can_read_staff_tables()` (JWT admin / role + optional email table)
+--   • SELECT policies on `family_members` and `family_subscriptions`
+-- =============================================================================
+
+-- ALTER TABLE IF EXISTS public.family_members ENABLE ROW LEVEL SECURITY;
+-- ALTER TABLE IF EXISTS public.family_subscriptions ENABLE ROW LEVEL SECURITY;
+-- ... see famio_admin_table_access.sql
