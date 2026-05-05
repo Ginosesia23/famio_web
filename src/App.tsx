@@ -10,12 +10,14 @@ import LoginPage from './pages/LoginPage'
 import ResetPasswordPage from './pages/ResetPasswordPage'
 import { AuthProvider } from './auth/AuthContext'
 import { RequireAuth } from './auth/RequireAuth'
+import { SupabaseAuthLandingRedirect } from './auth/SupabaseAuthLandingRedirect'
 import './App.css'
 import './admin-ui.css'
 
 export default function App() {
   return (
     <AuthProvider>
+      <SupabaseAuthLandingRedirect />
       <Routes>
         <Route path="/" element={<FamioLanding />} />
         <Route path="/login" element={<LoginPage />} />

@@ -1,10 +1,12 @@
 import { type FormEvent, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useSearchParams } from 'react-router-dom'
 import { getPasswordResetRedirectUrl } from '../auth/authSiteUrl'
 import { getSupabaseBrowserClient, isSupabaseConfigured } from '../supabase/client'
 
 export default function ForgotPasswordPage() {
   const supabaseAuth = isSupabaseConfigured()
+  const [searchParams] = useSearchParams()
+  const linkIssue = searchParams.get('link')
   const [email, setEmail] = useState('')
   const [error, setError] = useState<string | undefined>()
   const [pending, setPending] = useState(false)
@@ -50,6 +52,13 @@ export default function ForgotPasswordPage() {
 
         <div className="admin-auth-card">
           <h1 className="admin-auth-title">Forgot password?</h1>
+          {!sent && linkIssue === 'expired' ? (
+            <p className="admin-auth-error" role="status">
+              That reset link has expired or was already used (some inboxes open
+              links once for security). Request a new email and open the link
+              promptly in this browser.
+            </p>
+          ) : null}
 
           {!supabaseAuth ? (
             <>

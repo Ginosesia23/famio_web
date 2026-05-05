@@ -1,5 +1,9 @@
 /**
- * Link target for Supabase `resetPasswordForEmail` (must appear in Dashboard → Authentication → Redirect URLs).
+ * Canonical public origin for auth email links (`resetPasswordForEmail` redirectTo).
+ * Required in production builds if the app is opened from a different origin than
+ * users use in the browser when requesting a reset (otherwise redirectTo can mismatch
+ * Supabase allowlists). No trailing slash.
+ * Example: https://www.famio.co.uk
  */
 export function getPasswordResetRedirectUrl(): string {
   const raw = import.meta.env.VITE_AUTH_SITE_URL?.trim()
