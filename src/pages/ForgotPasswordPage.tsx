@@ -18,7 +18,7 @@ export default function ForgotPasswordPage() {
 
     const supabase = getSupabaseBrowserClient()
     if (!supabase) {
-      setError('Supabase client is unavailable. Check URL and anon key in .env.')
+      setError('Password reset is not available right now. Please try again later.')
       return
     }
 
@@ -54,19 +54,17 @@ export default function ForgotPasswordPage() {
           <h1 className="admin-auth-title">Forgot password?</h1>
           {!sent && linkIssue === 'expired' ? (
             <p className="admin-auth-error" role="status">
-              That reset link has expired or was already used (some inboxes open
-              links once for security). Request a new email and open the link
-              promptly in this browser.
+              That reset link has expired or was already used (some apps and mail
+              clients open links once for security). Request a new email and tap
+              the link once—finish in the browser that opens.
             </p>
           ) : null}
 
           {!supabaseAuth ? (
             <>
               <p className="admin-auth-lede">
-                Password reset uses Supabase Auth. Add{' '}
-                <code>VITE_SUPABASE_URL</code> and{' '}
-                <code>VITE_SUPABASE_ANON_KEY</code> to your env, restart Vite, and
-                try again.
+                Password reset is not enabled for this site yet. Please contact
+                your team if you need help accessing your account.
               </p>
               <p className="admin-auth-footer-note">
                 <Link to="/login">← Back to sign in</Link>
@@ -79,9 +77,13 @@ export default function ForgotPasswordPage() {
                 link to choose a new password. Check your inbox (and spam).
               </p>
               <p className="admin-auth-demo-hint">
-                Redirect URL must be allowed in Supabase Dashboard → Authentication
-                → URL configuration (add{' '}
-                <code>{getPasswordResetRedirectUrl()}</code>).
+                Requested this from the Famio app? Tap the link in your email—it
+                opens in your browser—and set your new password there before going
+                back to the app.
+              </p>
+              <p className="admin-auth-demo-hint">
+                Didn’t get the email after a minute or two? Check spam / junk, or
+                try again later.
               </p>
               <p className="admin-auth-footer-note">
                 <Link to="/login">← Back to sign in</Link>

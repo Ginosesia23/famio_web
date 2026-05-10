@@ -16,6 +16,11 @@ import {
   validateAdminCredentials,
 } from './session'
 import {
+  clearPasswordRecoveryActive,
+  markPasswordRecoveryActive,
+  isPasswordRecoveryActive,
+} from './passwordRecoveryPending'
+import {
   getSupabaseBrowserClient,
   isSupabaseConfigured,
 } from '../supabase/client'
@@ -82,6 +87,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         return
       }
 
+      /** Recovery JWT is not a full staff login; never signOut or admin users miss the form. */
+      if (isPasswordRecoveryActive()) {
+        setUser(null)
+        return
+      }
+
       let allowed = false
       try {
         allowed = await resolveAdminDashboardAccess(client, u)
@@ -109,25 +120,49 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       session: Session | null,
     ) {
       if (event === 'PASSWORD_RECOVERY') {
+        markPasswordRecoveryActive()
         setUser(null)
         return
       }
       if (onResetPasswordRoute()) {
+        if (session) markPasswordRecoveryActive()
         setUser(null)
         return
       }
       await evaluateSupabaseSession(session)
     }
 
-    void client.auth.getSession().then(async ({ data }) => {
-      if (cancelled) return
-      await dispatchAuthSession('INITIAL_SESSION', data.session)
-      markReady()
-    })
+    /**
+     * GoTrue applies URL recovery sessions synchronously inside init, but notifies
+     * `PASSWORD_RECOVERY` on `setTimeout(0)` — after `initializePromise` settles.
+     * `getSession().then(...)` therefore often runs INITIAL_SESSION **before**
+     * PASSWORD_RECOVERY. Evaluating admin on `/` sign-outs non-admins (correct for
+     * normal log-in) which **revokes** the freshly stored recovery session. Defer one
+     * macrotask and skip INITIAL_SESSION when PASSWORD_RECOVERY already dispatched.
+     */
+    let consumeInitialBecauseRecovery = false
 
     const { data } = client.auth.onAuthStateChange((event, session) => {
       if (cancelled) return
+      if (event === 'PASSWORD_RECOVERY') {
+        consumeInitialBecauseRecovery = true
+      }
       void dispatchAuthSession(event, session)
+    })
+
+    void client.auth.getSession().then(async ({ data }) => {
+      if (cancelled) return
+      await new Promise<void>((resolve) => {
+        setTimeout(resolve, 0)
+      })
+      if (cancelled) return
+      if (consumeInitialBecauseRecovery) {
+        consumeInitialBecauseRecovery = false
+        markReady()
+        return
+      }
+      await dispatchAuthSession('INITIAL_SESSION', data.session)
+      markReady()
     })
 
     return () => {
@@ -146,7 +181,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           return {
             ok: false,
             message:
-              'Supabase is not configured correctly. Check VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY.',
+              'Sign-in is not available right now. Please try again later.',
           }
         }
         const { data, error } = await supabase.auth.signInWithPassword({
@@ -174,9 +209,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           return {
             ok: false,
             message:
-              'Not authorized for admin. Set profiles.access = admin for your user (or legacy allowlist/JWT metadata — see .env.example). Ensure RLS allows you to SELECT your profiles row.',
+              'Wrong email or password. Check your credentials and try again.',
           }
         }
+        clearPasswordRecoveryActive()
         setUser({
           email:
             data.user.email?.trim().toLowerCase() ??
@@ -192,6 +228,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           message: 'Wrong email or password. Check your credentials and try again.',
         }
       }
+      clearPasswordRecoveryActive()
       persistSession(email.trim().toLowerCase())
       setUser({ email: email.trim().toLowerCase() })
       return { ok: true }
@@ -200,6 +237,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   )
 
   const logout = useCallback(() => {
+    clearPasswordRecoveryActive()
     clearStoredSession()
     setUser(null)
     if (isSupabaseConfigured()) {

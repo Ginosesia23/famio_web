@@ -66,26 +66,13 @@ export default function LoginPage() {
               Password updated — sign in with your new password.
             </p>
           ) : null}
-          {supabaseAuth ? (
-            <p className="admin-auth-lede">
-              Sign in with Supabase Auth. Primary rule:{' '}
-              <code>profiles.access = admin</code> (otherwise{' '}
-              <code>member</code> stays on the household app only). Fallbacks:
-              JWT <code>admin</code> metadata or{' '}
-              <code>VITE_ADMIN_EMAIL</code> / <code>VITE_ADMIN_ALLOWED_EMAILS</code>.
-            </p>
-          ) : (
-            <p className="admin-auth-lede">
-              Access the admin dashboard. Set <code>VITE_SUPABASE_URL</code> and{' '}
-              <code>VITE_SUPABASE_ANON_KEY</code> to use real accounts; otherwise
-              use <code>VITE_ADMIN_EMAIL</code> and{' '}
-              <code>VITE_ADMIN_PASSWORD</code> (or dev defaults below).
-            </p>
-          )}
+          <p className="admin-auth-lede">
+            Use the email and password for your Famio staff account.
+          </p>
 
           {import.meta.env.DEV && !supabaseAuth ? (
             <p className="admin-auth-demo-hint">
-              Dev demo (no Supabase):&nbsp;
+              Local demo:&nbsp;
               <strong>admin@famio.local</strong> ·{' '}
               <strong>famio-admin-dev</strong>
             </p>

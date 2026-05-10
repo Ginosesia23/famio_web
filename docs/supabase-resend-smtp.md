@@ -42,6 +42,10 @@ If it doesn’t match, Supabase sends users to **Site URL** (`/`), and the magic
 
 The app forwards valid recovery fragments from `/` → `/reset-password` when Supabase incorrectly lands users on the home page, but **allowlisted `redirectTo` is still required** for a reliable first redirect.
 
+### Static hosting → `404` on `/reset-password` or `/login`
+
+This app is a SPA: only `index.html` exists on disk. Your host must **rewrite unknown paths to `index.html`** (HTTP 200), not try to fetch a `/reset-password` file. After deploy this repo ships **`public/_redirects`** (Netlify / Cloudflare Pages) and **`vercel.json`** (Vercel). If you use nginx, S3, or another stack, configure the same SPA fallback there and redeploy.
+
 ### “Email link invalid or expired” (`otp_expired`)
 
 Common causes:
