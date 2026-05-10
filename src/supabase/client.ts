@@ -35,6 +35,8 @@ export function getSupabaseBrowserClient(): SupabaseClient | null {
         persistSession: true,
         autoRefreshToken: true,
         detectSessionInUrl: true,
+        /** Must match Supabase email recovery redirects that use `?code=` (PKCE). Implicit flow would reject that URL. */
+        flowType: 'pkce',
         storage: localStorage,
       },
     })

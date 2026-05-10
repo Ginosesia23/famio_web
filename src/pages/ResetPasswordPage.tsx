@@ -1,5 +1,8 @@
-import { type FormEvent, useEffect, useState } from 'react'
-import type { AuthChangeEvent } from '@supabase/supabase-js'
+import { type FormEvent, useEffect, useRef, useState } from 'react'
+import {
+  isAuthPKCECodeVerifierMissingError,
+  type AuthChangeEvent,
+} from '@supabase/supabase-js'
 import { Link, useNavigate } from 'react-router-dom'
 import { clearPasswordRecoveryActive } from '../auth/passwordRecoveryPending'
 import { useAuth } from '../auth/AuthContext'
@@ -19,6 +22,15 @@ export default function ResetPasswordPage() {
   const [pending, setPending] = useState(false)
   /** null = checking, true = magic link/session ok, false = invalid or timed out */
   const [recoveryOk, setRecoveryOk] = useState<boolean | null>(null)
+  /**
+   * PKCE recovery needs a code_verifier stored when the reset was *requested*.
+   * Opening the email on another device/browser has no verifier — exchange fails.
+   */
+  const [pkceWrongBrowser, setPkceWrongBrowser] = useState(false)
+
+  const failTimerRef = useRef<ReturnType<typeof window.setTimeout> | undefined>(
+    undefined,
+  )
 
   useEffect(() => {
     if (!supabaseAuth) {
@@ -33,15 +45,66 @@ export default function ResetPasswordPage() {
     }
 
     let cancelled = false
+    setPkceWrongBrowser(false)
 
-    /** Ensure URL→session exchange finished; then retry a few times (mobile / slow locks). */
+    const clearFailTimer = () => {
+      if (failTimerRef.current !== undefined) {
+        window.clearTimeout(failTimerRef.current)
+        failTimerRef.current = undefined
+      }
+    }
+
+    const settleOk = () => {
+      if (!cancelled) {
+        clearFailTimer()
+        setRecoveryOk(true)
+      }
+    }
+
+    failTimerRef.current = window.setTimeout(() => {
+      if (!cancelled) setRecoveryOk((prev) => (prev === null ? false : prev))
+    }, RECOVERY_CHECK_MS)
+
     void (async () => {
       await supabase.auth.initialize()
+      if (cancelled) return
+
+      let {
+        data: { session },
+      } = await supabase.auth.getSession()
+      if (session) {
+        settleOk()
+        return
+      }
+
+      const code = new URLSearchParams(window.location.search).get('code')
+      if (code) {
+        const { error: exchangeError } =
+          await supabase.auth.exchangeCodeForSession(code)
+        if (cancelled) return
+
+        if (exchangeError && isAuthPKCECodeVerifierMissingError(exchangeError)) {
+          clearFailTimer()
+          setPkceWrongBrowser(true)
+          setRecoveryOk(false)
+          return
+        }
+
+        if (!exchangeError) {
+          ;({
+            data: { session },
+          } = await supabase.auth.getSession())
+          if (session) {
+            settleOk()
+            return
+          }
+        }
+      }
+
       for (let attempt = 0; attempt < 6 && !cancelled; attempt++) {
         const { data } = await supabase.auth.getSession()
-        if (cancelled) return
         if (data.session) {
-          setRecoveryOk(true)
+          settleOk()
           return
         }
         await new Promise((r) => setTimeout(r, 120 * (attempt + 1)))
@@ -52,20 +115,16 @@ export default function ResetPasswordPage() {
       (event: AuthChangeEvent, session) => {
         if (cancelled) return
         if (event === 'PASSWORD_RECOVERY' && session) {
-          setRecoveryOk(true)
+          settleOk()
           return
         }
-        if (session) setRecoveryOk(true)
+        if (session) settleOk()
       },
     )
 
-    const t = window.setTimeout(() => {
-      if (!cancelled) setRecoveryOk((prev) => (prev === null ? false : prev))
-    }, RECOVERY_CHECK_MS)
-
     return () => {
       cancelled = true
-      window.clearTimeout(t)
+      clearFailTimer()
       data.subscription.unsubscribe()
     }
   }, [supabaseAuth])
@@ -160,12 +219,26 @@ export default function ResetPasswordPage() {
             <p className="admin-auth-brand-sub">Reset password</p>
           </header>
           <div className="admin-auth-card">
-            <h1 className="admin-auth-title">Link invalid or expired</h1>
-            <p className="admin-auth-lede">
-              Open the latest email we sent and tap the link once. If you started
-              from the Famio app, finish in the browser that opens—then you can
-              return to the app and sign in.
-            </p>
+            <h1 className="admin-auth-title">
+              {pkceWrongBrowser
+                ? 'Open the link in this browser'
+                : 'Link invalid or expired'}
+            </h1>
+            {pkceWrongBrowser ? (
+              <p className="admin-auth-lede">
+                This secure link only works in the{' '}
+                <strong>same browser</strong> where the reset was requested (the
+                link and that page share a one-time key). Request a new email
+                and open it <strong>here</strong>—or request the reset from this
+                phone’s browser if you prefer to stay on mobile.
+              </p>
+            ) : (
+              <p className="admin-auth-lede">
+                Open the latest email we sent and tap the link once. If you
+                started from the Famio app, finish in the browser that
+                opens—then you can return to the app and sign in.
+              </p>
+            )}
             <p className="admin-auth-footer-note">
               <Link to="/forgot-password">Request a new link →</Link>
             </p>
